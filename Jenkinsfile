@@ -27,6 +27,19 @@ pipeline {
             }
         
             }
+            stage (" sonar scan"){ 
+              steps{
+                withSonarQubeEnv('sonar') {
+                  sh "mvn -f SampleWebApp/pom.xml sonar:sonar" 
+              }
+
+            }
+
+            stage ("quality gate"){
+              steps{
+                waitForQualityGate abortPipeline: true
+              }
+            }
         
         
          stage('Logging into AWS ECR') {
