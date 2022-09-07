@@ -51,7 +51,13 @@ pipeline {
         }
       }
     }
-        
+        stage ('code scan'){
+            steps{
+                withSonarQubeEnv('sonar') {
+                  sh "mvn -f SampleWebApp/pom.xml sonar:sonar" 
+              }
+            }
+        }
         stage('Pushing to ECR') {
           steps{  
             script {
