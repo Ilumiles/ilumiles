@@ -21,26 +21,26 @@ pipeline {
             }
         }
         
-             stage('Test') {
+        stage('Test') {
             steps {
                 sh 'cd SampleWebApp && mvn test'
             }
         
             }
         
-          stage ('code scan'){
+        stage ('code scan'){
             steps{
                 withSonarQubeEnv('sonar') {
                   sh "mvn -f SampleWebApp/pom.xml sonar:sonar" 
               }
             }
         }
-         stage ('quality gate'){
+        stage ('quality gate'){
               steps{
                 waitForQualityGate abortPipeline: true
               }
             }
-         stage('Logging into AWS ECR') {
+        stage('Logging into AWS ECR') {
                      environment {
                         AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
                         AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
@@ -55,13 +55,13 @@ pipeline {
             }
         }
       
-          stage('Building image') {
+        stage('Building image') {
             steps{
               script {
                 dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}" 
+                 }
+             }
         }
-      }
-    }
         
         stage('Pushing to ECR') {
           steps{  
