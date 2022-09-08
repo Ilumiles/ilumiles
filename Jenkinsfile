@@ -35,7 +35,11 @@ pipeline {
               }
             }
         }
-        
+         stage ('quality gate'){
+              steps{
+                waitForQualityGate abortPipeline: true
+              }
+            }
          stage('Logging into AWS ECR') {
                      environment {
                         AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
