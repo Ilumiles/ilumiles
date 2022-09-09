@@ -11,6 +11,6 @@ image:
   tag: IMAGE_TAG
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 80
 
